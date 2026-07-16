@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Encode</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+    }
+
+    /* NAVBAR */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      padding: 15px 30px;
+      background: rgba(0,0,0,0.3);
+      color: white;
+    }
+
+    .nav-links a {
+      margin-left: 20px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+
+    /* CARD */
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 85vh;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      padding: 30px;
+      border-radius: 20px;
+      width: 350px;
+      text-align: center;
+      color: white;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #00c6ff;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0072ff;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <h3>🔐 Steganography</h3>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="encode.html">Encode</a>
+    <a href="decode.html">Decode</a>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="container">
+  <div class="card">
+    <h2>Encode Message</h2>
+
+    <input type="file" id="image">
+    <input type="text" id="message" placeholder="Secret message">
+    <input type="email" id="email" placeholder="Email">
+
+    <button onclick="encode()">Encode & Send</button>
+  </div>
+</div>
+
+<script>
+async function encode() {
+  const formData = new FormData();
+  formData.append("image", document.getElementById("image").files[0]);
+  formData.append("message", document.getElementById("message").value);
+  formData.append("email", document.getElementById("email").value);
+
+  const res = await fetch("http://localhost:3000/encode", {
+    method: "POST",
+    body: formData
+  });
+
+  const data = await res.json();
+  alert(data.message);
+}
+</script>
+
+</body>
+</html>
